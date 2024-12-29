@@ -1,43 +1,30 @@
-#include "CircularQueue.h"
+//#include "CircularQueue.h"
+#include "LinkedQueue.h"
 
-
-void CQ_CreateQueue(CircularQueue** Queue, int Capacity);
-void CQ_DestroyQueue(CircularQueue* Queue);
-void CQ_EnqueueQueue(CircularQueue* Queue, ElementType Data);
-ElementType CQ_DequeueQueue(CircularQueue* Queue);
-int CQ_IsEmpty(CircularQueue* Queue);
-int CQ_isFull(CircularQueue* Queue);
-int CQ_GetSize(CircularQueue* Queue);
-
+void LQ_CreateQueue(LinkedQueue** Queue);
+void LQ_DestroyQueue(LinkedQueue* Queue);
+void LQ_Enqueue(LinkedQueue* Queue, Node* NewNode);
+Node* LQ_Dequeue(LinkedQueue* Queue);
+int LQ_IsEmpty(LinkedQueue* Queue);
+Node* LQ_CreateNode(char* Data);
+void LQ_DestroyNode(Node* Node);
 
 int main() {
 
-	CircularQueue* Queue; 
-	CQ_CreateQueue(&Queue, 10);
+	LinkedQueue* Queue;
+	LQ_CreateQueue(&Queue);
 
-	CQ_EnqueueQueue(Queue, 1);
-	CQ_EnqueueQueue(Queue, 2);
-	CQ_EnqueueQueue(Queue, 3);
-	CQ_EnqueueQueue(Queue, 4);
+	LQ_Enqueue(Queue, LQ_CreateNode("abc"));
+	LQ_Enqueue(Queue, LQ_CreateNode("efg"));
+	LQ_Enqueue(Queue, LQ_CreateNode("ifg"));
+	LQ_Enqueue(Queue, LQ_CreateNode("cfd"));
 
-	for (int i = 0;i < 3;i++) {
-		printf("Dequeue: %d ",CQ_DequeueQueue(Queue));
-		printf("Front: %d ",Queue->Front);
-		printf("Rear: %d\n",Queue->Rear);
+	printf("Queue Size: %d\n",Queue->Count);
+
+	while (LQ_IsEmpty(Queue)==0) {
+		printf("Dequeue: %s\n",LQ_Dequeue(Queue)->Data);
 	}
 
-	int i = 100;
-	while (CQ_isFull(Queue) == 0) {
-		CQ_EnqueueQueue(Queue, i++);
-	}
-
-	while (CQ_IsEmpty(Queue) == 0) {
-		printf("Dequeue: %d ", CQ_DequeueQueue(Queue));
-		printf("Front: %d ", Queue->Front);
-		printf("Rear: %d\n", Queue->Rear);
-	}
-
-	CQ_DestroyQueue(Queue);
 
 	return 0;
 }
